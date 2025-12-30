@@ -1,0 +1,39 @@
+# ==================================
+#  GHOSTTY CONFIGURATION - DRACULA
+# ==================================
+
+# --- Fonts ---
+font-family = Monalisa
+font-size = 21
+font-feature = calt, liga, dlig
+font-thicken = true
+
+# --- Theme ---
+theme = Atom One Dark
+
+# --- Shell ---
+command = fish
+
+
+# Adds "aesthetic" breathing room inside the window
+window-padding-x = 25
+window-padding-y = 25
+
+# --- Positioning & State ---
+# "always" tells Ghostty to remember exactly where you last put the window.
+# Move it to the center ONCE, and it will open there forever.
+window-save-state = always
+
+# --- Visuals ---
+background-opacity = 1.00
+background-blur-radius = 20
+window-decoration = false
+
+# --- Mouse & Cursor ---
+cursor-style = block
+cursor-style-blink = true
+cursor-click-to-move = true
+mouse-hide-while-typing = true
+
+# --- Interaction ---
+confirm-close-surface = false
