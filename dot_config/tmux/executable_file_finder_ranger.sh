@@ -9,31 +9,34 @@ if [[ "$SEARCH_ROOT" == "all" ]]; then
     SEARCH_ROOT="/"
 fi
 
-# Use fd if available
+# Use fd if available (OPTIMIZED)
 if command -v fd >/dev/null 2>&1; then
-    SEARCH_CMD="fd --type f --type d --hidden --follow --exclude .git . \"$SEARCH_ROOT\""
+    SEARCH_CMD="fd --type f --hidden --exclude .git --no-follow . \"$SEARCH_ROOT\""
 else
-    SEARCH_CMD="find \"$SEARCH_ROOT\" -xdev -type f -o -type d 2>/dev/null"
+    SEARCH_CMD="find \"$SEARCH_ROOT\" -xdev 2>/dev/null"
 fi
 
 # --- CACHE SEARCH RESULTS FOR SPEED ---
 TMP_CACHE=$(mktemp)
-eval "$SEARCH_CMD" > "$TMP_CACHE"
 
-# --- FZF WITH METADATA PREVIEW ---
-file=$(cat "$TMP_CACHE" | fzf \
+# Prevent runaway CPU
+nice -n 10 bash -c "$SEARCH_CMD" > "$TMP_CACHE"
+
+# --- FZF WITH LIGHTWEIGHT PREVIEW ---
+file=$(fzf < "$TMP_CACHE" \
     --height=100% \
     --border=rounded \
     --layout=reverse \
-    --ansi \
     --prompt='▶ Search → ' \
-    --preview 'stat {} 2>/dev/null || ls -ld {}' \
-    --preview-window=right:50%:wrap \
+    --preview 'ls -ld {} 2>/dev/null | head -n 1' \
+    --preview-window=right:50% \
+    --no-sort \
     --bind "ctrl-r:reload:cat $TMP_CACHE"
 )
 
 [[ -z "${file:-}" ]] && exit 0
 
 # --- OPEN RANGER ---
-tmux new-window -n "Ranger" "cd '$(dirname "$file")' && ranger --selectfile='$(realpath "$file")'"
+tmux new-window -n "Ranger" \
+    "cd '$(dirname "$file")' && ranger --selectfile='$(realpath "$file")'"
 
