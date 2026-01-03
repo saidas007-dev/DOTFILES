@@ -1,5 +1,5 @@
 # ==================================
-#  GHOSTTY CONFIGURATION - DRACULA
+#  GHOSTTY CONFIGURATION - PYWAL
 # ==================================
 
 # --- Fonts ---
@@ -8,24 +8,23 @@ font-size = 21
 font-feature = calt, liga, dlig
 font-thicken = true
 
-# --- Theme ---
-theme = Atom One Dark
+# --- Theme (Pywal) ---
+# The "?" prevents errors if the file doesn't exist yet
+config-file = ?~/.cache/wal/colors-ghostty
 
 # --- Shell ---
 command = fish
-
 
 # Adds "aesthetic" breathing room inside the window
 window-padding-x = 25
 window-padding-y = 25
 
 # --- Positioning & State ---
-# "always" tells Ghostty to remember exactly where you last put the window.
-# Move it to the center ONCE, and it will open there forever.
 window-save-state = always
 
 # --- Visuals ---
-background-opacity = 1.00
+# Pywal provides the color, this controls the transparency
+background-opacity = 0.75 
 background-blur-radius = 20
 window-decoration = false
 

@@ -1,5 +1,11 @@
 local wezterm = require("wezterm")
 
+-- 1. Load Pywal Colors
+-- Ensure you have created the template at ~/.config/wal/templates/colors-wezterm.lua
+-- and ran 'wal -i /path/to/image' at least once.
+local wal_file = os.getenv("HOME") .. "/.cache/wal/colors-wezterm.lua"
+local colors = dofile(wal_file)
+
 -- NOTE: I removed the "gui-startup" fullscreen code.
 -- Now the window will open normally, and Linux Mint should remember its position better.
 
@@ -10,45 +16,9 @@ return {
 	-- Thin Cursor
 	default_cursor_style = "BlinkingBar",
 
-	-- Everforest Theme (Hard Dark)
-	colors = {
-		background = "#272E33",
-		foreground = "#D3C6AA",
-		cursor_bg = "#A7C080",
-		cursor_border = "#A7C080",
-		cursor_fg = "#272E33",
-		selection_bg = "#425047",
-		selection_fg = "#D3C6AA",
-		split = "#425047",
-
-		ansi = {
-			"#272E33",
-			"#E67E80",
-			"#A7C080",
-			"#DBBC7F",
-			"#7FBBB3",
-			"#D699B6",
-			"#83C092",
-			"#D3C6AA",
-		},
-		brights = {
-			"#4C566A",
-			"#E67E80",
-			"#A7C080",
-			"#DBBC7F",
-			"#7FBBB3",
-			"#D699B6",
-			"#83C092",
-			"#FFFFFF",
-		},
-
-		tab_bar = {
-			inactive_tab = {
-				bg_color = "#1E2326",
-				fg_color = "#859289",
-			},
-		},
-	},
+	-- 2. Apply Pywal Colors
+	-- This replaces the hardcoded Everforest table
+	colors = colors,
 
 	-- Window Look
 	window_background_opacity = 0.80,
@@ -62,8 +32,8 @@ return {
 	-- Tab Bar
 	enable_tab_bar = false,
 	-- Initial Window Size
-	initial_cols = 115,
-	initial_rows = 28,
+	initial_cols = 118,
+	initial_rows = 29,
 
 	-- System Integration
 	enable_kitty_keyboard = true,
